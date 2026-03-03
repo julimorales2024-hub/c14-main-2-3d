@@ -304,7 +304,8 @@
                 <div class="row">
                     @foreach ($molecules as $i => $molecule)
                         <div class="col-xs-12 col-sm-6 col-md-4 text-center" id="mol{{ $i }}" data-molid="{{ $molecule->id }}" style="margin-bottom: 30px;">
-                            
+<form id="formuOcultoSpec{{ $i }}" action="{{ url('spectrum/' . $molecule->id) }}" method="POST" style="display:none;">@csrf</form>
+                            <form id="formuOcultoProp{{ $i }}" action="{{ url('properties/' . $molecule->id) }}" method="GET" style="display:none;"></form>                           
                             {{-- 1. VISUALIZADOR JSME (ARRIBA) --}}
                             <div style="position: relative; width: 100%; height: 280px; margin: 0 auto 15px auto; overflow: hidden;">
                                 <div class="jme jme2" id="jsme_container{{ $i }}" style="width: 100%; height: 100%;"></div>
@@ -320,9 +321,8 @@
 
                             {{-- 3. BOTONES --}}
                             <div style="margin-bottom: 15px;">
-                                <a href="{{ url('properties/' . $molecule->id) }}" class="btn btn-danger btn-sm" style="background-color: #c9302c; border-color: #ac2925; margin: 0 2px; border-radius: 4px;">
+<a href="{{ url('properties/' . $molecule->id) }}" onclick="event.preventDefault(); document.getElementById('formuOcultoProp{{ $i }}').submit();" class="btn btn-danger btn-sm" style="background-color: #c9302c; border-color: #ac2925; margin: 0 2px; border-radius: 4px;">
                                     {!! trans('applicationResource.properties.properties') !!}
-                                </a>
                                 <a href="{{ url('spectrum/' . $molecule->id) }}" class="btn btn-danger btn-sm" style="background-color: #c9302c; border-color: #ac2925; margin: 0 2px; border-radius: 4px;">
                                     {!! trans('applicationResource.molecule.spectrum') !!}
                                 </a>

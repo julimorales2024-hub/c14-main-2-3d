@@ -238,10 +238,11 @@
 
                 var startingStructure = "<?php echo e($molecules[$i]->jme); ?>";
 
-                jsmeApplets["<?php echo $i; ?>"] = new JSApplet.JSME("jsme_container" + "<?php echo e($i); ?>", {
+                jsmeApplets["<?php echo $i; ?>"] = new JSApplet.JSME("jsme_container" + "<?php echo e($i); ?>", "100%", "100%", {
                     "options": "depict, number",
                     "jme": startingStructure,
                 });
+
             <?php endfor; ?>
             cambiar();
         }
@@ -265,7 +266,6 @@
                     <div class="col-xs-12 text-center">
                         <h4><b><?php echo trans('applicationResource.result.results'); ?>: <span id="numMol"><?php echo e(count($selectedMols)); ?></span> <?php echo trans('applicationResource.result.compounds'); ?></b></h4>
                     </div>
-
                 </div>
 
                 <div class="row combinations" id="resultadosnumdesp">
@@ -277,67 +277,60 @@
                         <input type="radio" id="nonumeration2" name="resultados" /><label
                             for="nonumeration2"><?php echo trans('applicationResource.result.noNumeration'); ?></label>
                     </div>
-
                 </div>
 
                 <?php if(isset($data['desplazamientos'])): ?>
                     <?php echo $__env->make('layouts.toleranceTable', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
                 <?php endif; ?>
-                
 
                 <div class="row">
                     <?php for($i = 0; $i < sizeof($molecules); $i++): ?>
-                        <div class="col-xs-12 col-sm-6 col-md-4 text-center" id="mol<?php echo e($i); ?>">
-                                <div class="jme jme2" id="jsme_container<?php echo e($i); ?>"></div>
+                        <div class="col-xs-12 col-sm-6 col-md-4 text-center" id="mol<?php echo e($i); ?>" style="margin-bottom: 30px;">
+                            <div class="jme jme2" id="jsme_container<?php echo e($i); ?>"></div>
 
-                                <div class="descripcion">
-                                    <!--formulario en el que se van a guardar los datos ocultos para pasarselos al spectrum-->
-                                    <form id="formuOcultoProp<?php echo e($i); ?>" role="form" method="GET"
-                                        action="<?php echo e(url('properties/' . $molecules[$i]->id)); ?>">
-                                        <button class=" btn-danger" type="submit" name="submitBtn" value="submitBtn"
-                                            style="padding: 2px; border-radius: 5px">
-                                            <i class="fa fa-btn fa-user"></i><?php echo trans('applicationResource.properties.properties'); ?>
+                            <div class="descripcion">
+                                <!--formulario en el que se van a guardar los datos ocultos para pasarselos al spectrum-->
+                                <form id="formuOcultoProp<?php echo e($i); ?>" role="form" method="GET"
+                                    action="<?php echo e(url('properties/' . $molecules[$i]->id)); ?>">
+                                    <button class=" btn-danger" type="submit" name="submitBtn" value="submitBtn"
+                                        style="padding: 2px; border-radius: 5px">
+                                        <i class="fa fa-btn fa-user"></i><?php echo trans('applicationResource.properties.properties'); ?>
 
-                                        </button>
-                                    </form>
+                                    </button>
+                                </form>
 
-                                    <!--formulario en el que se van a guardar los datos ocultos para pasarselos al spectrum-->
-                                    <form id="formuOcultoSpec<?php echo e($i); ?>" role="form" method="GET"
-                                        action="<?php echo e(url('spectrum/' . $molecules[$i]->id)); ?>">
-                                        <button class=" btn-danger" type="submit" name="submitBtn" value="submitBtn"
-                                            style="padding: 2px; border-radius: 5px">
-                                            <i class="fa fa-btn fa-user"></i><?php echo trans('applicationResource.molecule.spectrum'); ?>
+                                <!--formulario en el que se van a guardar los datos ocultos para pasarselos al spectrum-->
+                                <form id="formuOcultoSpec<?php echo e($i); ?>" role="form" method="GET"
+                                    action="<?php echo e(url('spectrum/' . $molecules[$i]->id)); ?>">
+                                    <button class=" btn-danger" type="submit" name="submitBtn" value="submitBtn"
+                                        style="padding: 2px; border-radius: 5px">
+                                        <i class="fa fa-btn fa-user"></i><?php echo trans('applicationResource.molecule.spectrum'); ?>
 
-                                        </button>
-                                    </form>
+                                    </button>
+                                </form>
 
-                                    <?php if(isset($molecules[$i]->doi) && !empty($molecules[$i]->doi)): ?>
-                                        <a href="<?php echo e($molecules[$i]->doi); ?>" class="btn btn-danger" target="_blank"
-                                            style="padding: 1px; border-radius: 5px">DOI</a>
-                                    <?php endif; ?>
-                                    <?php if(Auth::user()->allowed && Auth::user()): ?>
-                                        <span> <?php echo e($molecules[$i]->reference); ?></span>
-                                    <?php endif; ?>
-                                </div>
+                                <?php if(isset($molecules[$i]->doi) && !empty($molecules[$i]->doi)): ?>
+                                    <a href="<?php echo e($molecules[$i]->doi); ?>" class="btn btn-danger" target="_blank"
+                                        style="padding: 1px; border-radius: 5px">DOI</a>
+                                <?php endif; ?>
+                                <?php if(Auth::user() && Auth::user()->allowed): ?>
+                                    <span> <?php echo e($molecules[$i]->reference); ?></span>
+                                <?php endif; ?>
+                            </div>
 
-
-                                <div class="descripcion">
-                                    <span> <?php echo e($molecules[$i]->family); ?></span>
-                                    <span> <?php echo e($molecules[$i]->subFamily); ?></span>
-                                    <span> <?php echo e($molecules[$i]->subSubFamily); ?></span>
-                                    <span> <?php echo e($molecules[$i]->solvent); ?> </span>
-                                </div>
+                            <div class="descripcion">
+                                <span> <?php echo e($molecules[$i]->family); ?></span>
+                                <span> <?php echo e($molecules[$i]->subFamily); ?></span>
+                                <span> <?php echo e($molecules[$i]->subSubFamily); ?></span>
+                                <span> <?php echo e($molecules[$i]->solvent); ?> </span>
+                            </div>
                         </div>
+                    <?php endfor; ?>
                 </div>
-                <?php endfor; ?>
 
             </div>
-
-        </div>
         </div>
     </section>
-
-    
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.master', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\C14-main-2\resources\views/search/compareResults.blade.php ENDPATH**/ ?>

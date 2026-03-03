@@ -1,8 +1,8 @@
 <?php $__env->startSection('scripts'); ?>
     
-	<script src="<?php echo e(asset('js/highcharts/highcharts.js')); ?>"></script>
+    <script src="<?php echo e(asset('js/highcharts/highcharts.js')); ?>"></script>
     <script src="<?php echo e(asset('js/highcharts/highcharts-3d.js')); ?>"></script>
-<script src="<?php echo e(asset('js/highcharts/exporting.js')); ?>"></script>
+    <script src="<?php echo e(asset('js/highcharts/exporting.js')); ?>"></script>
     <script src="//raw.githubusercontent.com/exupero/saveSvgAsPng/gh-pages/src/saveSvgAsPng.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.0/jspdf.debug.js"></script>
     <script src="<?php echo e(asset('jsme/jsme.nocache.js')); ?>"></script>
@@ -235,6 +235,7 @@
     <style>
         .chart-wrapper {
             position: relative;
+            margin-bottom: 15px;
         }
         .chart-controls {
             position: absolute;
@@ -279,6 +280,35 @@
             padding: 5px 15px;
             margin-bottom: 5px;
         }
+        /* Separar menu exportacion de Highcharts */
+        .highcharts-exporting-group {
+            transform: translate(-50px, 0);
+        }
+        /* Responsive */
+        #topLinechart, #middleLinechart, #lowerLinechart {
+            min-width: 300px;
+            height: 300px;
+            width: 100% !important;
+            margin: 0 auto;
+        }
+        #jsme_container {
+            max-width: 350px;
+            max-height: 350px;
+        }
+        @media (max-width: 768px) {
+            #topLinechart, #middleLinechart, #lowerLinechart {
+                height: 250px;
+            }
+            #jsme_container {
+                position: relative !important;
+                margin: 0 auto 15px auto;
+                display: block;
+            }
+            .chart-controls {
+                right: 40px;
+                top: 5px;
+            }
+        }
         @media print {
             .chart-controls, .btn-3d-global-wrapper {
                 display: none !important;
@@ -305,7 +335,7 @@
                 </div>
 
                 <hr class="invisible" />
-                <div class="hidden-xs" style="border: 2px solid #cb0223; position: absolute; cursor: move; z-index: 20"
+                <div class="hidden-xs" style="border: 2px solid #cb0223; position: absolute; cursor: move; z-index: 20; width: 350px; height: 350px; overflow: hidden;"
                     id="jsme_container"></div>
 
                 
@@ -358,5 +388,4 @@
 
     </section>
 <?php $__env->stopSection(); ?>
-
 <?php echo $__env->make('layouts.master', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\C14-main-2\resources\views/search/spectrum.blade.php ENDPATH**/ ?>

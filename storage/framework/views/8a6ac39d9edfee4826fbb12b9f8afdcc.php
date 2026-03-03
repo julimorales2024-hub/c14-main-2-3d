@@ -8,14 +8,14 @@
 <?php $__env->startSection('scripts'); ?>
     <script src="<?php echo e(asset('js/spin.js')); ?>"></script>
     <script src="<?php echo e(asset('js/loadingScreen.js')); ?>"></script>
-    <script src="<?php echo e(asset('js/bootstrap-tabcollapse.js')); ?>"></script>
+    <!-- <script src="<?php echo e(asset('js/bootstrap-tabcollapse.js')); ?>"></script> -->
     <script src="<?php echo e(asset('js/nouislider.min.js')); ?>"></script>
     <script src="<?php echo e(asset('js/searchByCarbonType.js')); ?>"></script>
     <script>
         $(document).ready(function () {
 
             // DEPENDENCY: https://github.com/flatlogic/bootstrap-tabcollapse
-            $('.content-tabs').tabCollapse();
+            // $('.content-tabs').tabCollapse();
 
             // initialize tab function
             $('.nav-tabs a').click(function (e) {
@@ -26,13 +26,65 @@
         });
     </script>
 <?php $__env->stopSection(); ?>
-
 <?php $__env->startSection('estilos'); ?>
-    <link rel="stylesheet" href="<?php echo e(asset('//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css')); ?>">
-    <link rel="stylesheet" href="<?php echo e(asset('css/nouislider.min.css')); ?>">
+   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+   <link rel="stylesheet" href="<?php echo e(asset('css/nouislider.min.css')); ?>">
 
-    
+<style>
+        .nav-tabs.content-tabs {
+            display: flex !important;
+            flex-direction: row !important;
+            flex-wrap: wrap !important;
+            border-bottom: none !important;
+            list-style: none !important;
+            padding-left: 0 !important;
+            margin-bottom: 15px !important;
+            justify-content: center;
+        }
+        .nav-tabs.content-tabs > li,
+        .nav-tabs.content-tabs > li.active {
+            display: inline-block !important;
+            float: none !important;
+            width: auto !important;
+            margin: 0 2px 4px 2px !important;
+            padding: 0 !important;
+        }
+        .nav-tabs.content-tabs > li > a {
+            display: inline-block !important;
+            padding: 8px 18px !important;
+            border: 1px solid #ccc !important;
+            border-radius: 4px !important;
+            color: #555 !important;
+            background-color: #fff !important;
+            text-decoration: none !important;
+            font-size: 13px !important;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .nav-tabs.content-tabs > li > a strong {
+            color: inherit !important;
+            font-weight: bold !important;
+        }
+        .nav-tabs.content-tabs > li > a:hover {
+            background-color: #e8a0a0 !important;
+            color: #fff !important;
+            border-color: #d08080 !important;
+        }
+        .nav-tabs.content-tabs > li > a:hover strong {
+            color: #fff !important;
+        }
+        .nav-tabs.content-tabs > li.active > a,
+        .nav-tabs.content-tabs > li.active > a:hover {
+            background-color: #cb0223 !important;
+            color: #fff !important;
+            border-color: #a8021c !important;
+        }
+        .nav-tabs.content-tabs > li.active > a strong {
+            color: #fff !important;
+        }
+    </style>
 <?php $__env->stopSection(); ?>
+
 <?php $__env->startSection('mainContainer'); ?>
 
     <section class="container main-container">
@@ -70,14 +122,16 @@
                     ?>
                     <div id="tab-container" data-easytabs="true" class="row">
                         <ul class="nav nav-tabs content-tabs" role="tablist">
-                            <?php $__currentLoopData = $menus; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $title=>$options): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <li><a class="text-capitalize" data-toggle="tab" href="#tabs1-<?php echo $title; ?>"><strong><?php echo trans('applicationResource.type.'.$title); ?></strong></a></li>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+<?php $__currentLoopData = $menus; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $title=>$options): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+  <li class="<?php echo e($loop->first ? 'active' : ''); ?>"><a class="text-capitalize" data-toggle="tab" href="#tabs1-<?php echo $title; ?>"><strong><?php echo trans('applicationResource.type.'.$title); ?></strong></a></li>  
+<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </ul>
                         <div id="sliderMenu" class="tab-content">
                             <?php $__currentLoopData = $menus; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $title=>$options): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <?php $index++ ?>
-                                <div id="tabs1-<?php echo $title; ?>" class="tab-pane fade">
+				<div id="tabs1-<?php echo $title; ?>" class="tab-pane fade <?php echo e($loop->first ? 'in active' : ''); ?>">
+                                
                                     <div class="row panel-body" id="menu<?php echo $index; ?>">
                                         <?php $__currentLoopData = $options; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $option=>$label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <div class="col-xs-2">

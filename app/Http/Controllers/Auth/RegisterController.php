@@ -58,19 +58,19 @@ class RegisterController extends Controller
             'university' => ['nullable', 'string', 'max:255'],
             'city' => ['nullable', 'string', 'max:255'],
             'country' => ['nullable', 'string', 'max:255'],
-         // 'g-recaptcha-response' => ['required', function ($attribute, $value, $fail) {
-         //     $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
-                  //  'secret' => config('services.recaptcha.secret_key'),
-                   // 'response' => $value,
-                   // 'remoteip' => request()->ip()
-               // ]);
+         'g-recaptcha-response' => ['required', function ($attribute, $value, $fail) {
+              $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+                    'secret' => config('services.recaptcha.secret_key'),
+                    'response' => $value,
+                    'remoteip' => request()->ip()
+               ]);
 
-             //   $result = $response->json();
+                $result = $response->json();
 
-               // if (!isset($result['success']) || !$result['success']) {
-                 //   $fail('La verificación reCAPTCHA ha fallado. Por favor, inténtalo de nuevo.');
-             //   }
-           // }],
+                if (!isset($result['success']) || !$result['success']) {
+                    $fail('La verificación reCAPTCHA ha fallado. Por favor, inténtalo de nuevo.');
+              }
+            }],
         ], [
             'login.required' => 'El campo login es obligatorio.',
             'login.unique' => 'Este login ya está en uso.',

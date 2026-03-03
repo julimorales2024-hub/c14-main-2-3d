@@ -303,7 +303,8 @@
                 <div class="row">
                     <?php $__currentLoopData = $molecules; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $i => $molecule): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <div class="col-xs-12 col-sm-6 col-md-4 text-center" id="mol<?php echo e($i); ?>" data-molid="<?php echo e($molecule->id); ?>" style="margin-bottom: 30px;">
-                            
+<form id="formuOcultoSpec<?php echo e($i); ?>" action="<?php echo e(url('spectrum/' . $molecule->id)); ?>" method="POST" style="display:none;"><?php echo csrf_field(); ?></form>
+                            <form id="formuOcultoProp<?php echo e($i); ?>" action="<?php echo e(url('properties/' . $molecule->id)); ?>" method="GET" style="display:none;"></form>                           
                             
                             <div style="position: relative; width: 100%; height: 280px; margin: 0 auto 15px auto; overflow: hidden;">
                                 <div class="jme jme2" id="jsme_container<?php echo e($i); ?>" style="width: 100%; height: 100%;"></div>
@@ -319,10 +320,9 @@
 
                             
                             <div style="margin-bottom: 15px;">
-                                <a href="<?php echo e(url('properties/' . $molecule->id)); ?>" class="btn btn-danger btn-sm" style="background-color: #c9302c; border-color: #ac2925; margin: 0 2px; border-radius: 4px;">
+<a href="<?php echo e(url('properties/' . $molecule->id)); ?>" onclick="event.preventDefault(); document.getElementById('formuOcultoProp<?php echo e($i); ?>').submit();" class="btn btn-danger btn-sm" style="background-color: #c9302c; border-color: #ac2925; margin: 0 2px; border-radius: 4px;">
                                     <?php echo trans('applicationResource.properties.properties'); ?>
 
-                                </a>
                                 <a href="<?php echo e(url('spectrum/' . $molecule->id)); ?>" class="btn btn-danger btn-sm" style="background-color: #c9302c; border-color: #ac2925; margin: 0 2px; border-radius: 4px;">
                                     <?php echo trans('applicationResource.molecule.spectrum'); ?>
 

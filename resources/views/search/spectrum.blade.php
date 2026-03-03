@@ -1,10 +1,10 @@
 @extends('layouts.master')
 
 @section('scripts')
-    {{-- CDN scripts - sin asset() porque son URLs externas --}}
-	<script src="{{ asset('js/highcharts/highcharts.js') }}"></script>
+    {{-- Highcharts local --}}
+    <script src="{{ asset('js/highcharts/highcharts.js') }}"></script>
     <script src="{{ asset('js/highcharts/highcharts-3d.js') }}"></script>
-<script src="{{ asset('js/highcharts/exporting.js') }}"></script>
+    <script src="{{ asset('js/highcharts/exporting.js') }}"></script>
     <script src="//raw.githubusercontent.com/exupero/saveSvgAsPng/gh-pages/src/saveSvgAsPng.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.0/jspdf.debug.js"></script>
     <script src="{{ asset('jsme/jsme.nocache.js') }}"></script>
@@ -237,6 +237,7 @@
     <style>
         .chart-wrapper {
             position: relative;
+            margin-bottom: 15px;
         }
         .chart-controls {
             position: absolute;
@@ -281,6 +282,35 @@
             padding: 5px 15px;
             margin-bottom: 5px;
         }
+        /* Separar menu exportacion de Highcharts */
+        .highcharts-exporting-group {
+            transform: translate(-50px, 0);
+        }
+        /* Responsive */
+        #topLinechart, #middleLinechart, #lowerLinechart {
+            min-width: 300px;
+            height: 300px;
+            width: 100% !important;
+            margin: 0 auto;
+        }
+        #jsme_container {
+            max-width: 350px;
+            max-height: 350px;
+        }
+        @media (max-width: 768px) {
+            #topLinechart, #middleLinechart, #lowerLinechart {
+                height: 250px;
+            }
+            #jsme_container {
+                position: relative !important;
+                margin: 0 auto 15px auto;
+                display: block;
+            }
+            .chart-controls {
+                right: 40px;
+                top: 5px;
+            }
+        }
         @media print {
             .chart-controls, .btn-3d-global-wrapper {
                 display: none !important;
@@ -307,10 +337,10 @@
                 </div>
 
                 <hr class="invisible" />
-                <div class="hidden-xs" style="border: 2px solid #cb0223; position: absolute; cursor: move; z-index: 20"
+                <div class="hidden-xs" style="border: 2px solid #cb0223; position: absolute; cursor: move; z-index: 20; width: 350px; height: 350px; overflow: hidden;"
                     id="jsme_container"></div>
 
-                {{-- Grafico superior: CH, CH2, CH3 (DEPT) --}}
+                {{-- Grafico superior --}}
                 <div class="chart-wrapper">
                     <div class="chart-controls">
                         <button id="btn3d_topLinechart" class="btn-3d-off" onclick="toggle3D('topLinechart')">
@@ -320,7 +350,7 @@
                     <div class="row" id="topLinechart" style="min-width: 300px; height: 300px; margin: 0 auto"></div>
                 </div>
 
-                {{-- Grafico medio: solo CH --}}
+                {{-- Grafico medio --}}
                 <div class="chart-wrapper">
                     <div class="chart-controls">
                         <button id="btn3d_middleLinechart" class="btn-3d-off" onclick="toggle3D('middleLinechart')">
@@ -330,7 +360,7 @@
                     <div class="row" id="middleLinechart" style="min-width: 300px; height: 300px; margin: 0 auto"></div>
                 </div>
 
-                {{-- Grafico inferior: todos los datos --}}
+                {{-- Grafico inferior --}}
                 <div class="chart-wrapper">
                     <div class="chart-controls">
                         <button id="btn3d_lowerLinechart" class="btn-3d-off" onclick="toggle3D('lowerLinechart')">

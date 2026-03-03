@@ -240,10 +240,11 @@
 
                 var startingStructure = "{{ $molecules[$i]->jme }}";
 
-                jsmeApplets["{!! $i !!}"] = new JSApplet.JSME("jsme_container" + "{{ $i }}", {
+                jsmeApplets["{!! $i !!}"] = new JSApplet.JSME("jsme_container" + "{{ $i }}", "100%", "100%", {
                     "options": "depict, number",
                     "jme": startingStructure,
                 });
+
             @endfor
             cambiar();
         }
@@ -267,7 +268,6 @@
                     <div class="col-xs-12 text-center">
                         <h4><b>{!! trans('applicationResource.result.results') !!}: <span id="numMol">{{count($selectedMols)}}</span> {!! trans('applicationResource.result.compounds') !!}</b></h4>
                     </div>
-
                 </div>
 
                 <div class="row combinations" id="resultadosnumdesp">
@@ -279,63 +279,56 @@
                         <input type="radio" id="nonumeration2" name="resultados" /><label
                             for="nonumeration2">{!! trans('applicationResource.result.noNumeration') !!}</label>
                     </div>
-
                 </div>
 
                 @if (isset($data['desplazamientos']))
                     @include('layouts.toleranceTable')
                 @endif
-                
 
                 <div class="row">
                     @for ($i = 0; $i < sizeof($molecules); $i++)
-                        <div class="col-xs-12 col-sm-6 col-md-4 text-center" id="mol{{ $i }}">
-                                <div class="jme jme2" id="jsme_container{{ $i }}"></div>
+                        <div class="col-xs-12 col-sm-6 col-md-4 text-center" id="mol{{ $i }}" style="margin-bottom: 30px;">
+                            <div class="jme jme2" id="jsme_container{{ $i }}"></div>
 
-                                <div class="descripcion">
-                                    <!--formulario en el que se van a guardar los datos ocultos para pasarselos al spectrum-->
-                                    <form id="formuOcultoProp{{ $i }}" role="form" method="GET"
-                                        action="{{ url('properties/' . $molecules[$i]->id) }}">
-                                        <button class=" btn-danger" type="submit" name="submitBtn" value="submitBtn"
-                                            style="padding: 2px; border-radius: 5px">
-                                            <i class="fa fa-btn fa-user"></i>{!! trans('applicationResource.properties.properties') !!}
-                                        </button>
-                                    </form>
+                            <div class="descripcion">
+                                <!--formulario en el que se van a guardar los datos ocultos para pasarselos al spectrum-->
+                                <form id="formuOcultoProp{{ $i }}" role="form" method="GET"
+                                    action="{{ url('properties/' . $molecules[$i]->id) }}">
+                                    <button class=" btn-danger" type="submit" name="submitBtn" value="submitBtn"
+                                        style="padding: 2px; border-radius: 5px">
+                                        <i class="fa fa-btn fa-user"></i>{!! trans('applicationResource.properties.properties') !!}
+                                    </button>
+                                </form>
 
-                                    <!--formulario en el que se van a guardar los datos ocultos para pasarselos al spectrum-->
-                                    <form id="formuOcultoSpec{{ $i }}" role="form" method="GET"
-                                        action="{{ url('spectrum/' . $molecules[$i]->id) }}">
-                                        <button class=" btn-danger" type="submit" name="submitBtn" value="submitBtn"
-                                            style="padding: 2px; border-radius: 5px">
-                                            <i class="fa fa-btn fa-user"></i>{!! trans('applicationResource.molecule.spectrum') !!}
-                                        </button>
-                                    </form>
+                                <!--formulario en el que se van a guardar los datos ocultos para pasarselos al spectrum-->
+                                <form id="formuOcultoSpec{{ $i }}" role="form" method="GET"
+                                    action="{{ url('spectrum/' . $molecules[$i]->id) }}">
+                                    <button class=" btn-danger" type="submit" name="submitBtn" value="submitBtn"
+                                        style="padding: 2px; border-radius: 5px">
+                                        <i class="fa fa-btn fa-user"></i>{!! trans('applicationResource.molecule.spectrum') !!}
+                                    </button>
+                                </form>
 
-                                    @if (isset($molecules[$i]->doi) && !empty($molecules[$i]->doi))
-                                        <a href="{{ $molecules[$i]->doi }}" class="btn btn-danger" target="_blank"
-                                            style="padding: 1px; border-radius: 5px">DOI</a>
-                                    @endif
-                                    @if (Auth::user()->allowed && Auth::user())
-                                        <span> {{ $molecules[$i]->reference }}</span>
-                                    @endif
-                                </div>
+                                @if (isset($molecules[$i]->doi) && !empty($molecules[$i]->doi))
+                                    <a href="{{ $molecules[$i]->doi }}" class="btn btn-danger" target="_blank"
+                                        style="padding: 1px; border-radius: 5px">DOI</a>
+                                @endif
+                                @if (Auth::user() && Auth::user()->allowed)
+                                    <span> {{ $molecules[$i]->reference }}</span>
+                                @endif
+                            </div>
 
-
-                                <div class="descripcion">
-                                    <span> {{ $molecules[$i]->family }}</span>
-                                    <span> {{ $molecules[$i]->subFamily }}</span>
-                                    <span> {{ $molecules[$i]->subSubFamily }}</span>
-                                    <span> {{ $molecules[$i]->solvent }} </span>
-                                </div>
+                            <div class="descripcion">
+                                <span> {{ $molecules[$i]->family }}</span>
+                                <span> {{ $molecules[$i]->subFamily }}</span>
+                                <span> {{ $molecules[$i]->subSubFamily }}</span>
+                                <span> {{ $molecules[$i]->solvent }} </span>
+                            </div>
                         </div>
+                    @endfor
                 </div>
-                @endfor
 
             </div>
-
-        </div>
         </div>
     </section>
-
-    
 @endsection

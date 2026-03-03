@@ -10,14 +10,14 @@
 @section('scripts')
     <script src="{{ asset('js/spin.js') }}"></script>
     <script src="{{ asset('js/loadingScreen.js') }}"></script>
-    <script src="{{ asset('js/bootstrap-tabcollapse.js') }}"></script>
+    <!-- <script src="{{ asset('js/bootstrap-tabcollapse.js') }}"></script> -->
     <script src="{{ asset('js/nouislider.min.js') }}"></script>
     <script src="{{ asset('js/searchByCarbonType.js') }}"></script>
     <script>
         $(document).ready(function () {
 
             // DEPENDENCY: https://github.com/flatlogic/bootstrap-tabcollapse
-            $('.content-tabs').tabCollapse();
+            // $('.content-tabs').tabCollapse();
 
             // initialize tab function
             $('.nav-tabs a').click(function (e) {
@@ -28,13 +28,65 @@
         });
     </script>
 @endsection
-
 @section('estilos')
-    <link rel="stylesheet" href="{{ asset('//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/nouislider.min.css') }}">
+   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+   <link rel="stylesheet" href="{{ asset('css/nouislider.min.css') }}">
 
-    
+<style>
+        .nav-tabs.content-tabs {
+            display: flex !important;
+            flex-direction: row !important;
+            flex-wrap: wrap !important;
+            border-bottom: none !important;
+            list-style: none !important;
+            padding-left: 0 !important;
+            margin-bottom: 15px !important;
+            justify-content: center;
+        }
+        .nav-tabs.content-tabs > li,
+        .nav-tabs.content-tabs > li.active {
+            display: inline-block !important;
+            float: none !important;
+            width: auto !important;
+            margin: 0 2px 4px 2px !important;
+            padding: 0 !important;
+        }
+        .nav-tabs.content-tabs > li > a {
+            display: inline-block !important;
+            padding: 8px 18px !important;
+            border: 1px solid #ccc !important;
+            border-radius: 4px !important;
+            color: #555 !important;
+            background-color: #fff !important;
+            text-decoration: none !important;
+            font-size: 13px !important;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .nav-tabs.content-tabs > li > a strong {
+            color: inherit !important;
+            font-weight: bold !important;
+        }
+        .nav-tabs.content-tabs > li > a:hover {
+            background-color: #e8a0a0 !important;
+            color: #fff !important;
+            border-color: #d08080 !important;
+        }
+        .nav-tabs.content-tabs > li > a:hover strong {
+            color: #fff !important;
+        }
+        .nav-tabs.content-tabs > li.active > a,
+        .nav-tabs.content-tabs > li.active > a:hover {
+            background-color: #cb0223 !important;
+            color: #fff !important;
+            border-color: #a8021c !important;
+        }
+        .nav-tabs.content-tabs > li.active > a strong {
+            color: #fff !important;
+        }
+    </style>
 @endsection
+
 @section('mainContainer')
 
     <section class="container main-container">
@@ -72,14 +124,16 @@
                     ?>
                     <div id="tab-container" data-easytabs="true" class="row">
                         <ul class="nav nav-tabs content-tabs" role="tablist">
-                            @foreach($menus as $title=>$options)
-                                <li><a class="text-capitalize" data-toggle="tab" href="#tabs1-{!! $title !!}"><strong>{!! trans('applicationResource.type.'.$title) !!}</strong></a></li>
-                            @endforeach
+
+@foreach($menus as $title=>$options)
+  <li class="{{ $loop->first ? 'active' : '' }}"><a class="text-capitalize" data-toggle="tab" href="#tabs1-{!! $title !!}"><strong>{!! trans('applicationResource.type.'.$title) !!}</strong></a></li>  
+@endforeach
                         </ul>
                         <div id="sliderMenu" class="tab-content">
                             @foreach($menus as $title=>$options)
                                 <?php $index++ ?>
-                                <div id="tabs1-{!! $title !!}" class="tab-pane fade">
+				<div id="tabs1-{!! $title !!}" class="tab-pane fade {{ $loop->first ? 'in active' : '' }}">
+                                
                                     <div class="row panel-body" id="menu{!! $index !!}">
                                         @foreach($options as $option=>$label)
                                             <div class="col-xs-2">
